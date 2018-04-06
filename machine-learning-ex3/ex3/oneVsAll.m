@@ -14,6 +14,8 @@ n = size(X, 2);
 %fprintf("m: %f \n", m); % 5000
 %fprintf("n: %f \n", n); % 400
 
+%fprintf("y %f\n", y);
+
 %fprintf("num_labels: %f \n", num_labels); % 10
 
 % You need to return the following variables correctly
@@ -56,22 +58,15 @@ X = [ones(m, 1) X];
 %         fmincg (@(t)(lrCostFunction(t, X, (y == c), lambda)), ...
 %                 initial_theta, options);
 %
-  initial_theta = zeros(n + 1, 1);
-  options = optimset('GradObj', 'on', 'MaxIter', 10);
-  for c = 1:1
-    [theta(c)] = fmincg (@(t)(lrCostFunction(t, X, (y == c), lambda)), initial_theta, options);
-  end
-
-  all_theta = theta;
-
-
-
-
-
-
-
-
-
+    initial_theta = zeros(n + 1, 1);
+    options = optimset('GradObj', 'on', 'MaxIter', 50);
+    for c = 1:num_labels
+      [theta] = fmincg (@(t)(lrCostFunction(t, X, (y == c), lambda)), initial_theta, options);
+      %fprintf("theta %f", theta');
+      % 10 x 401 - each row corresponds to the learned logistic regression paramteters for one class
+      all_theta(c,:) = theta';
+      %fprintf("theta %f", size(all_theta));
+    endfor
 
 % =========================================================================
 
