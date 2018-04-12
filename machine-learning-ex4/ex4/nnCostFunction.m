@@ -40,31 +40,45 @@ Theta2_grad = zeros(size(Theta2));
 %         computed in ex4.m
 
 % y labels should be 10 dimensional vectors containing only 0,1 values representing the value of label
+
 yi = zeros(5000,10);
 for i = 1:5000
   yi(i,y(i)) = 1;
 endfor
 
+%fprintf("yi %f\n", size(yi));
+
 % add column of 1s to X
 X1 = ones(5000,1);
-X = [X1 X];
+X = [X1 X]; % 5000 x 401
 
 %compute J
-z2 = X * Theta1';
-a2 = sigmoid(z2);
+%Theta1 25 x 401
+%Theta2 10 x 26
+%z2 = X * Theta1';
+%a2 = sigmoid(z2);
 
-aones = ones(5000,1);
-a2 = [aones a2];
+%aones = ones(5000,1);
+%a2 = [aones a2]; % 5000 x 26
+%fprintf("a2 %f\n", size(a2));
 
-z3 = a2 * Theta2';
-a3 = sigmoid(z3);
-h = a3; % 5000 x 10
+%z3 = a2 * Theta2';
+%a3 = sigmoid(z3);
+%h = a3; % 5000 x 10
+a2 = zeros(5000,25);
 
-J = (-yi .* log(h))-((1-yi) .* log(1-h));
+for i=1:m
+  %Perform forward propagation and backpropagation using example (x(i),y(i))
 
-J = 1/m .* sum(J);
+  a2(i,:) = sigmoid(X(i,:) * Theta1');
 
 
+  % yi 5000 x 10
+  %J = J + sum((-yi(i,:) .* log(h(i,:)))-(1-yi(i,:) .* log(1-h(i,:))));
+  %fprintf("J: %f\n", J);
+endfor
+%fprintf("z2 %f\n", z2(1,:));
+J = 1/m * J;
 
 %fprintf('h %f', size(h));
 
@@ -92,24 +106,6 @@ J = 1/m .* sum(J);
 %               the regularization separately and then add them to Theta1_grad
 %               and Theta2_grad from Part 2.
 %
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 % -------------------------------------------------------------
 
