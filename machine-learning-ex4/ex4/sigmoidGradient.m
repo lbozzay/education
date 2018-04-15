@@ -14,12 +14,12 @@ g = zeros(size(z));
 
 %fprintf("g %f \n", size(g));
 
-sigmoid = 1 ./ (1 + e.^-z);
+%sigmoid = 1 ./ (1 + e.^-z);
 
-g = sigmoid .* (1 - sigmoid);
+%g = sigmoid .* (1 - sigmoid);
 
 
-
+g = sigmoid(z).*(1 - sigmoid(z));
 
 
 

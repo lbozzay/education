@@ -101,6 +101,27 @@ J = J + regularized;
 %         Hint: We recommend implementing backpropagation using a for-loop
 %               over the training examples if you are implementing it for the
 %               first time.
+
+D = 0;
+
+    delta3 = a3 - yi; %delta3
+
+    delta2 = (delta3 * Theta2); % 5000 x 26
+    %fprintf("delta2 size before colum wihtdrawal %f \n", size(delta2));
+
+    %fprintf("delta2 size after colum wihtdrawal %f \n", size(delta2));
+    %fprintf("z2 size %f \n", size(z2)); % 5000 x 25
+    delta2 = delta2 .* sigmoidGradient([ones(size(z2, 1), 1) z2]); %delta2
+    delta2 = delta2(:,2:end); % 5000 x 25
+    Theta2_grad = delta3;
+    Theta1_grad = delta2;
+
+    Delta_1 = delta2'*X;
+    Delta_2 = delta3'*a2;
+
+    Theta1_grad = Delta_1./m + (lambda/m)*[zeros(size(Theta1,1), 1) Theta1(:, 2:end)];
+    Theta2_grad = Delta_2./m + (lambda/m)*[zeros(size(Theta2,1), 1) Theta2(:, 2:end)];
+
 %
 % Part 3: Implement regularization with the cost function and gradients.
 %
@@ -109,6 +130,9 @@ J = J + regularized;
 %               the regularization separately and then add them to Theta1_grad
 %               and Theta2_grad from Part 2.
 %
+
+
+
 
 % -------------------------------------------------------------
 
