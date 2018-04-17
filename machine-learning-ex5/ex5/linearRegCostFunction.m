@@ -24,19 +24,22 @@ grad = zeros(size(theta));
 %fprintf("theta size: %f\n", size(theta)); % 2 x 1
 %fprintf("lambda: %f\n", lambda); % 1
 
+
 h = X * theta;
 
 J =  1 / (2 * m) * sum((h - y).^2);
 
-J = J + (lambda / (2 * m) * sum(theta(2).^2));
+theta(1) = 0;
+
+J = J + (lambda / (2 * m) * sum(theta.^2));
+
 
 %fprintf("J: %f\n", J);
 %fprintf("J: %f\n", size(J));
-
-grad_0 = 1/m * sum(X(:,1)' * (h-y));
+grad_0 = 1/m * (X(:,1)' * (h-y));
 %  fprintf("grad_non_reg: %f\n", grad_non_reg);
 %  fprintf("grad_non_reg size: %f\n", size(grad_non_reg));
-grad_rest = (1/m * sum(X(:,2:end)' * (h-y))) + ((lambda / m) * sum(theta(2).^2));
+grad_rest = (1/m * (X(:,2:end)' * (h-y))) + ((lambda / m) * sum(theta.^2));
 %  fprintf("grad_reg: %f\n", grad_reg);
 %  fprintf("grad_reg size: %f\n", size(grad_reg));
 
