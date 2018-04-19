@@ -39,13 +39,15 @@ J = J + (lambda / (2 * m) * sum(theta.^2));
 grad_0 = 1/m * (X(:,1)' * (h-y));
 %  fprintf("grad_non_reg: %f\n", grad_non_reg);
 %  fprintf("grad_non_reg size: %f\n", size(grad_non_reg));
-grad_rest = (1/m * (X(:,2:end)' * (h-y))) + ((lambda / m) * sum(theta.^2));
+grad_rest = (1/m * (X(:,2:end)' * (h-y))) + ((lambda / m) * theta(2:end));
 %  fprintf("grad_reg: %f\n", grad_reg);
 %  fprintf("grad_reg size: %f\n", size(grad_reg));
 
 grad(1) = grad_0;
 grad(2:end) = grad_rest;
 
+%Other solution:
+%grad = (1/m)*(X'*(h-y)+lambda*theta);
 
 
 

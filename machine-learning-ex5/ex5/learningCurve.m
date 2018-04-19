@@ -60,17 +60,20 @@ error_val   = zeros(m, 1);
 
 %fprintf("lambda: %f\n", lambda); % 0
 
-theta = trainLinearReg(X, y, 1);
+%theta = trainLinearReg(X, y, 1);
 %fprintf("theta size: %f\n", size(theta)); % 2 x 1
 
-thetaTrain = trainLinearReg(Xval, yval, 1);
+%thetaTrain = trainLinearReg(Xval, yval, 1);
 
 for i = 1:m
+  X_train = X(1:i, :);
+  y_train = y(1:i);
+  theta = trainLinearReg(X_train, y_train, lambda);
   %error_train(i) = (1 / (2 * m)) * sum(((X(i,:) * theta) - y(i)).^2);
-  error_train(i) = linearRegCostFunction(X(i,:), y(i), theta, lambda);
+  error_train(i) = linearRegCostFunction(X_train, y_train, theta, 0);
 
   %error_val(i) = (1 / (2 * m)) * sum(((Xval(i,:) * theta) - yval(i)).^2);
-  error_val(i) = linearRegCostFunction(Xval(i,:), yval(i), thetaTrain, lambda);
+  error_val(i) = linearRegCostFunction(Xval, yval, theta, 0);
 
 endfor
 
